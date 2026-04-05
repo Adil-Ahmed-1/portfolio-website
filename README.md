@@ -5,7 +5,7 @@
 A modern and responsive personal portfolio website built using React and Vite to showcase my projects, skills, and experience.
 
 ## 🌐 Live Demo
-👉 https://adil-khoso-eight.vercel.app/
+👉 https://adilahmedkhoso.netlify.app/
 
 ---
 
