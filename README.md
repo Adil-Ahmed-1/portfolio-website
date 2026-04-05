@@ -59,7 +59,7 @@ src/
 ## ⚙️ Installation & Setup
 
 ```bash
-git clone https://github.com/your-username/portfolio.git
+git clone https://github.com/Adil-Ahmed-1/portfolio-website.git
 cd portfolio
 npm install
 npm run dev
