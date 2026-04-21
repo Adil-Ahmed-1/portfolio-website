@@ -1,16 +1,66 @@
-# React + Vite
+# 🚀 Personal Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="943" height="439" alt="image" src="https://github.com/user-attachments/assets/4746afe9-c8ca-4b8a-b2be-aa5edd426280" />
 
-Currently, two official plugins are available:
+A modern and responsive personal portfolio website built using React and Vite to showcase my projects, skills, and experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌐 Live Demo
+👉 https://adilahmedkhoso.netlify.app/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📌 About Me
 
-## Expanding the ESLint configuration
+Hi, I'm **Adil Khoso** 👋  
+A passionate **Full Stack Developer (Learning Phase)** with experience in:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 💻 Frontend: HTML, CSS, Tailwind, Bootstrap, JavaScript, React  
+- ⚙️ Backend: PHP & MySQL  
+- 🤖 AI/ML: YOLOv8 (Final Year Project)
+
+---
+
+## 🛠️ Tech Stack
+
+- ⚛️ React.js  
+- ⚡ Vite  
+- 🎨 Tailwind CSS / Bootstrap  
+- 📦 JavaScript (ES6+)  
+
+---
+
+## ✨ Features
+
+- ✅ Fully Responsive Design  
+- ✅ Modern UI/UX  
+- ✅ Smooth Navigation  
+- ✅ Projects Showcase Section  
+- ✅ Skills & Experience Section  
+- ✅ Contact Form  
+
+---
+
+## 📂 Project Structure
+src/
+│── components/
+│ ├── Navbar.jsx
+│ ├── Hero.jsx
+│ ├── About.jsx
+│ ├── Skills.jsx
+│ ├── Projects.jsx
+│ ├── Contact.jsx
+│
+│── App.jsx
+│── main.jsx
+
+
+---
+
+## ⚙️ Installation & Setup
+
+```bash
+git clone https://github.com/Adil-Ahmed-1/portfolio-website.git
+cd portfolio
+npm install
+npm run dev
+
