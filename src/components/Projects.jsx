@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const projects = [
   {
@@ -44,37 +44,56 @@ const projects = [
 function Projects({ darkMode }) {
   const [activeProject, setActiveProject] = useState(null)
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeProject) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [activeProject])
+
   const theme = darkMode
     ? {
         title: 'text-white',
         subtitle: 'text-gray-300',
         card: 'bg-white/5 border border-white/10',
-        modal: 'bg-slate-950',
+        modal: 'bg-[#0d182e]', // Darker shade for modal
+        modalText: 'text-white',
+        modalDesc: 'text-gray-300',
+        modalTag: 'bg-white/10 text-white',
       }
     : {
         title: 'text-gray-900',
         subtitle: 'text-gray-600',
-        card: 'bg-white shadow-sm border border-gray-200',
+        card: 'bg-white shadow-lg border border-gray-200',
         modal: 'bg-white',
+        modalText: 'text-gray-900',
+        modalDesc: 'text-gray-600',
+        modalTag: 'bg-gray-100 text-gray-800',
       }
 
   return (
     <section
       id='projects'
-      className={`relative py-20 ${
+      className={`relative py-20 transition-colors duration-300 ${
         darkMode
-          ? 'bg-linear-to-br from-gray-900 via-[#0d182e] to-gray-900'
-          : 'bg-linear-to-br from-gray-50 to-blue-50'
+          ? 'bg-gradient-to-br from-gray-900 via-[#0d182e] to-gray-900'
+          : 'bg-gradient-to-br from-gray-50 to-blue-50'
       }`}
     >
       <div className='container mx-auto px-4'>
+        {/* Header */}
         <div className='text-center'>
           <span
             className={`inline-block text-sm font-semibold tracking-[0.4em] uppercase ${theme.subtitle}`}
           >
             Projects
           </span>
-          <h2 className={`mt-6 text-4xl sm:text-5xl font-bold ${theme.title}`}>
+          <h2 className={`mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold ${theme.title}`}>
             Recent work with live preview and GitHub code.
           </h2>
           <p
@@ -84,30 +103,31 @@ function Projects({ darkMode }) {
           </p>
         </div>
 
+        {/* Grid */}
         <div className='mt-14 grid gap-8 md:grid-cols-2'>
           {projects.map((project) => (
             <div
               key={project.title}
-              className={`overflow-hidden rounded-3xl ${theme.card} transition-transform duration-300 hover:-translate-y-1`}
+              className={`group overflow-hidden rounded-[2rem] ${theme.card} transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl`}
             >
               {/* Image */}
-              <div className='relative'>
+              <div className='relative overflow-hidden'>
                 <img
                   src={project.image}
                   alt={project.title}
-                  className={`h-72 w-full object-cover ${
-                    project.comingSoon ? 'blur-sm' : ''
+                  className={`h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+                    project.comingSoon ? 'blur-sm grayscale' : ''
                   }`}
                 />
 
                 {/* Coming Soon Overlay */}
                 {project.comingSoon && (
-                  <div className='absolute inset-0 flex items-center justify-center'>
-                    <div className='rounded-3xl bg-black/50 px-6 py-4 text-center backdrop-blur-sm'>
-                      <p className='text-sm uppercase tracking-[0.35em] text-orange-300'>
+                  <div className='absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px]'>
+                    <div className='rounded-2xl bg-black/60 px-8 py-4 text-center border border-white/10 shadow-xl'>
+                      <p className='text-xs uppercase tracking-[0.35em] text-orange-400 font-bold'>
                         Coming soon
                       </p>
-                      <h3 className='mt-2 text-2xl font-semibold text-white'>
+                      <h3 className='mt-1 text-2xl font-semibold text-white'>
                         {project.title}
                       </h3>
                     </div>
@@ -116,12 +136,12 @@ function Projects({ darkMode }) {
               </div>
 
               {/* Content */}
-              <div className='p-6'>
-                <h3 className='text-2xl font-semibold text-orange-500'>
+              <div className='p-6 sm:p-8'>
+                <h3 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} group-hover:text-orange-500 transition-colors`}>
                   {project.title}
                 </h3>
 
-                <p className={`mt-4 text-base leading-7 ${theme.subtitle}`}>
+                <p className={`mt-3 text-base leading-7 ${theme.subtitle}`}>
                   {project.description}
                 </p>
 
@@ -130,7 +150,7 @@ function Projects({ darkMode }) {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className='rounded-full border border-orange-500 px-3 py-1 text-sm text-orange-500'
+                      className={`rounded-full px-3 py-1 text-xs sm:text-sm font-medium border border-orange-500 text-orange-500`}
                     >
                       {tag}
                     </span>
@@ -143,20 +163,24 @@ function Projects({ darkMode }) {
                     type='button'
                     onClick={() => !project.comingSoon && setActiveProject(project)}
                     disabled={project.comingSoon}
-                    className={`rounded-full px-5 py-3 text-sm font-semibold text-white transition ${
+                    className={`rounded-full px-6 py-3 text-sm font-semibold text-white transition-all transform active:scale-95 ${
                       project.comingSoon
-                        ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-orange-500 hover:bg-orange-600'
+                        ? 'bg-gray-700 cursor-not-allowed opacity-50'
+                        : 'bg-orange-500 hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-500/30'
                     }`}
                   >
-                    View Project
+                    {project.comingSoon ? 'Unavailable' : 'View Project'}
                   </button>
 
                   <a
                     href={project.codeLink}
                     target='_blank'
                     rel='noreferrer'
-                    className='rounded-full border border-orange-500 px-5 py-3 text-sm font-semibold text-orange-500 transition hover:bg-orange-500 hover:text-white'
+                    className={`rounded-full px-6 py-3 text-sm font-semibold transition-all transform active:scale-95 ${
+                        darkMode 
+                        ? 'border border-white/20 text-white hover:bg-white hover:text-gray-900' 
+                        : 'border border-gray-300 text-gray-700 hover:border-gray-900 hover:text-gray-900'
+                    }`}
                   >
                     View Code
                   </a>
@@ -169,63 +193,83 @@ function Projects({ darkMode }) {
 
       {/* Modal */}
       {activeProject && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4'>
+        <div 
+          className='fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6 animate-in fade-in duration-200'
+          onClick={() => setActiveProject(null)} // Close on backdrop click
+        >
           <div
-            className={`w-full max-w-4xl rounded-4xl ${theme.modal} p-6 shadow-2xl`}
+            className={`relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[2rem] ${theme.modal} shadow-2xl animate-in zoom-in-95 duration-200`}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
           >
-            <div className='flex items-start justify-between gap-4'>
-              <div>
-                <h3 className='text-3xl font-bold text-white'>
-                  {activeProject.title}
-                </h3>
-                <p className='mt-3 max-w-2xl text-sm leading-7 text-gray-300'>
-                  {activeProject.details}
-                </p>
-              </div>
-
+            <div className='sticky top-0 z-10 flex items-center justify-between p-6 border-b border-gray-200/10 bg-inherit rounded-t-[2rem]'>
+              <h3 className={`text-2xl sm:text-3xl font-bold ${theme.modalText}`}>
+                {activeProject.title}
+              </h3>
               <button
                 onClick={() => setActiveProject(null)}
-                className='rounded-full bg-white/10 px-4 py-2 text-sm text-white hover:bg-white/20'
+                className={`rounded-full p-2 transition-colors ${darkMode ? 'hover:bg-white/10 text-white' : 'hover:bg-gray-100 text-gray-500'}`}
+                aria-label="Close modal"
               >
-                Close
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
-            <div className='mt-8 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]'>
-              <img
-                src={activeProject.image}
-                alt={activeProject.title}
-                className='h-96 w-full rounded-4xl object-cover'
-              />
-
-              <div className='flex flex-col justify-between rounded-4xl bg-black/30 p-6'>
-                <div>
-                  <h4 className='text-xl font-semibold text-orange-400'>
-                    Project Details
-                  </h4>
-                  <p className='mt-4 text-sm leading-7 text-gray-200'>
-                    {activeProject.description}
+            <div className='p-6 grid gap-8 lg:grid-cols-5'>
+              {/* Image Side */}
+              <div className='lg:col-span-3'>
+                <img
+                  src={activeProject.image}
+                  alt={activeProject.title}
+                  className='w-full h-auto rounded-2xl object-cover shadow-lg'
+                />
+                
+                <div className='mt-6'>
+                  <h4 className={`text-lg font-semibold ${theme.modalText}`}>Overview</h4>
+                  <p className={`mt-2 leading-7 ${theme.modalDesc}`}>
+                    {activeProject.details}
                   </p>
                 </div>
+              </div>
 
-                <div className='mt-6 flex flex-wrap gap-3'>
-                  {activeProject.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className='rounded-full bg-white/10 px-4 py-2 text-sm text-white'
-                    >
-                      {tag}
-                    </span>
-                  ))}
+              {/* Details Side */}
+              <div className='lg:col-span-2 flex flex-col gap-6'>
+                <div className={`rounded-2xl p-6 border ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-100 bg-gray-50'}`}>
+                  <h4 className={`text-xl font-semibold ${theme.modalText}`}>
+                    Technologies
+                  </h4>
+                  <div className='mt-4 flex flex-wrap gap-2'>
+                    {activeProject.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className={`rounded-full px-4 py-2 text-sm font-medium ${theme.modalTag}`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className={`rounded-2xl p-6 border ${darkMode ? 'border-white/10 bg-white/5' : 'border-gray-100 bg-gray-50'}`}>
+                   <h4 className={`text-xl font-semibold ${theme.modalText}`}>
+                    Quick Info
+                  </h4>
+                  <p className={`mt-2 text-sm ${theme.modalDesc}`}>
+                    {activeProject.description}
+                  </p>
                 </div>
 
                 <a
                   href={activeProject.codeLink}
                   target='_blank'
                   rel='noreferrer'
-                  className='mt-6 inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-600'
+                  className='mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-orange-500 px-6 py-3.5 text-sm font-bold text-white hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/25'
                 >
                   View GitHub Code
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                  </svg>
                 </a>
               </div>
             </div>
