@@ -5,7 +5,7 @@ function Hero({ darkMode }) {
         { icon: '/assets/instagram.png', alt: 'Instagram', href: 'https://www.instagram.com/' },
         { icon: '/assets/linkedin.png', alt: 'LinkedIn', href: 'https://www.linkedin.com/in/adil-khoso/' },
         { icon: '/assets/github.png', alt: 'GitHub', href: 'https://github.com/Adil-Ahmed-1' },
-        { icon: '/assets/figma.png', alt: 'Figma', href: 'https://www.figma.com/files/team/1428238607257160238/recents-and-sharing/recently-viewed?fuid=1428238605382308942' },
+        { icon: '../assets/figma.png', alt: 'Figma', href: 'https://www.figma.com/files/team/1428238607257160238/recents-and-sharing/recently-viewed?fuid=1428238605382308942' },
     ];
 
     const darkTheme = {
